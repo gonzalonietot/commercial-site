@@ -1,17 +1,15 @@
 <template>
   <div>
-    <router-view></router-view>
+    <span>This is login</span>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
+  name: "Login"
 }
 </script>
 
-<style>
-#app {
-}
+<style scoped>
+
 </style>
