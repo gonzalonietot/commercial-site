@@ -1,14 +1,18 @@
 import VueRouter from 'vue-router';
-import Base from '@/components/Base';
+import BaseForm from '@/components/BaseForm';
+import Login from '@/pages/Login';
 
 const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            name: Base, component: Base, path: '/'
+            name: BaseForm, component: BaseForm, path: '/', auth: true
         },
         {
-            name: Base, component: Base, path: '/home'
+            name: BaseForm, component: BaseForm, path: '/home', auth: true
+        },
+        {
+            name: Login, component: Login, path: '/login', auth: false
         }
     ]
 });
