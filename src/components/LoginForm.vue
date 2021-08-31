@@ -27,14 +27,18 @@
                 lazy-validation
               >
                 <v-text-field
+                  v-model="form.email"
                   label="Email"
                   name="email"
                   :append-icon="'mdi-account'"
+                  :rules="rules.emailRules"
                   type="text"
                 />
                 <v-text-field
+                  v-model="form.password"
                   label="Contraseña"
                   name="password"
+                  :rules="[rules.required, rules.maxPassword]"
                   append-icon="mdi-eye"
                 />
                 <!--<v-alert>
@@ -44,11 +48,8 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer />
-              <v-btn class="btn">
+              <v-btn class="btn" @click="login">
                 Ingresar
-              </v-btn>
-              <v-btn class="btn">
-                Crear cuenta
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -63,14 +64,32 @@ export default {
   name: 'LoginForm',
   data: () => {
     return {
+      form: {},
+      rules: {
+        required: v => !!v || 'Este campo es requerido',
+        maxPassword: v => v ? v && v.length <= 25 || 'Se ha superado el máximo permitido' : '',
+        emailRules: [
+          v => !!v || 'Email es requerido',
+          v => /.+@.+\..+/.test(v) || 'Email incorrecto'
+        ]
+      },
     }
   },
   computed: {
-
+    isAuthenticated() {
+      return this.$store.getters[`isAuthenticated`];
+    }
   },
   mounted () {
   },
   methods: {
+    async login() {
+      if (this.$refs.form.validate()) {
+        await this.$store.dispatch('login', this.form);
+        console.log(this.isAuthenticated);
+
+      }
+    }
   }
 }
 </script>
